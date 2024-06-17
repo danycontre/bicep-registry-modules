@@ -60,7 +60,7 @@ module diagnosticDependencies '../../../../../../utilities/e2e-template-assets/t
 module testDeploymentPooled '../../../main.bicep' = [
   for iteration in ['init', 'idem']: {
     scope: resourceGroup
-    name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
+    name: '${uniqueString(deployment().name, resourceLocation)}-test-Pooled-${serviceShort}-${iteration}'
     params: {
       name: '${namePrefix}${serviceShort}002'
       location: resourceLocation
@@ -231,7 +231,7 @@ module testDeploymentPooled '../../../main.bicep' = [
 module testDeploymentPersonal '../../../main.bicep' = [
   for iteration in ['init', 'idem']: {
     scope: resourceGroup
-    name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
+    name: '${uniqueString(deployment().name, resourceLocation)}-test-Personal-${serviceShort}-${iteration}'
     params: {
       name: '${namePrefix}${serviceShort}003'
       location: resourceLocation

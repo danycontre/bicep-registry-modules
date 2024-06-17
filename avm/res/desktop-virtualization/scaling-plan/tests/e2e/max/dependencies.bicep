@@ -82,5 +82,6 @@ output hostPoolIdPooled string = hostPoolPooled.id
 
 @description('The resource ID of the created host pool.')
 output hostPoolIdPersonal string = hostPoolPersonal.id
+
 @description('The principal ID of the created Managed Identity.')
 output managedIdentityPrincipalId string = managedIdentity.properties.principalId

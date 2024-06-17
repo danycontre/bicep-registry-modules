@@ -93,7 +93,7 @@ resource scalingPlan 'Microsoft.DesktopVirtualization/scalingPlans@2022-09-09' =
     timeZone: timeZone
     hostPoolType: hostPoolType
     exclusionTag: exclusionTag
-    schedules: schedules
+    schedules: []
     hostPoolReferences: hostPoolReferences
     description: description
   }
