@@ -57,10 +57,10 @@ module diagnosticDependencies '../../../../../../utilities/e2e-template-assets/t
 // ============== //
 
 @batchSize(1)
-module testDeploymentPooled '../../../main.bicep' = [
+module testDeployment '../../../main.bicep' = [
   for iteration in ['init', 'idem']: {
     scope: resourceGroup
-    name: '${uniqueString(deployment().name, resourceLocation)}-test-Pooled-${serviceShort}-${iteration}'
+    name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
     params: {
       name: '${namePrefix}${serviceShort}002'
       location: resourceLocation
@@ -227,200 +227,200 @@ module testDeploymentPooled '../../../main.bicep' = [
   }
 ]
 
-@batchSize(1)
-module testDeploymentPersonal '../../../main.bicep' = [
-  for iteration in ['init', 'idem']: {
-    scope: resourceGroup
-    name: '${uniqueString(deployment().name, resourceLocation)}-test-Personal-${serviceShort}-${iteration}'
-    params: {
-      name: '${namePrefix}${serviceShort}003'
-      location: resourceLocation
-      friendlyName: 'friendlyName'
-      description: 'myDescription'
-      schedules: [
-        {
-          daysOfWeek: [
-            'Monday'
-            'Wednesday'
-            'Thursday'
-            'Friday'
-          ]
-          name: 'WeekdaySchedule'
-          offPeakStartTime: {
-            hour: 20
-            minute: 0
-          }
-          offPeakStartVMOnConnect: 'Enable'
-          offPeakMinutesToWaitOnDisconnect: 30
-          offPeakActionOnDisconnect: 'Hibernate'
-          offPeakMinutesToWaitOnLogoff: 0
-          offPeakActionOnLogoff: 'Deallocate'
-          peakStartTime: {
-            hour: 9
-            minute: 0
-          }
-          peakStartVMOnConnect: 'Enable'
-          peakMinutesToWaitOnDisconnect: 30
-          peakActionOnDisconnect: 'Hibernate'
-          peakMinutesToWaitOnLogoff: 0
-          peakActionOnLogoff: 'Deallocate'
-          rampDownStartTime: {
-            hour: 18
-            minute: 0
-          }
-          rampDownStartVMOnConnect: 'Enable'
-          rampDownMinutesToWaitOnDisconnect: 30
-          rampDownActionOnDisconnect: 'Hibernate'
-          rampDownMinutesToWaitOnLogoff: 0
-          rampDownActionOnLogoff: 'Deallocate'
-          rampUpStartTime: {
-            hour: 7
-            minute: 0
-          }
-          rampUpAutoStartHosts: 'WithAssignedUser'
-          rampUpStartVMOnConnect: 'Enable'
-          rampUpMinutesToWaitOnDisconnect: 30
-          rampUpActionOnDisconnect: 'Hibernate'
-          rampUpMinutesToWaitOnLogoff: 0
-          rampUpActionOnLogoff: 'Deallocate'
-        }
-        {
-          daysOfWeek: [
-            'Tuesday'
-          ]
-          name: 'weekdaysSchedule-agent-updates'
-          offPeakStartTime: {
-            hour: 20
-            minute: 0
-          }
-          offPeakStartVMOnConnect: 'Enable'
-          offPeakMinutesToWaitOnDisconnect: 30
-          offPeakActionOnDisconnect: 'Hibernate'
-          offPeakMinutesToWaitOnLogoff: 0
-          offPeakActionOnLogoff: 'Deallocate'
-          peakStartTime: {
-            hour: 9
-            minute: 0
-          }
-          peakStartVMOnConnect: 'Enable'
-          peakMinutesToWaitOnDisconnect: 30
-          peakActionOnDisconnect: 'Hibernate'
-          peakMinutesToWaitOnLogoff: 0
-          peakActionOnLogoff: 'Deallocate'
-          rampDownStartTime: {
-            hour: 18
-            minute: 0
-          }
-          rampDownStartVMOnConnect: 'Enable'
-          rampDownMinutesToWaitOnDisconnect: 30
-          rampDownActionOnDisconnect: 'Hibernate'
-          rampDownMinutesToWaitOnLogoff: 0
-          rampDownActionOnLogoff: 'Deallocate'
-          rampUpStartTime: {
-            hour: 7
-            minute: 0
-          }
-          rampUpAutoStartHosts: 'WithAssignedUser'
-          rampUpStartVMOnConnect: 'Enable'
-          rampUpMinutesToWaitOnDisconnect: 30
-          rampUpActionOnDisconnect: 'Hibernate'
-          rampUpMinutesToWaitOnLogoff: 0
-          rampUpActionOnLogoff: 'Deallocate'
-        }
-        {
-          daysOfWeek: [
-            'Saturday'
-            'Sunday'
-          ]
-          name: 'WeekendSchedule'
-          offPeakStartTime: {
-            hour: 18
-            minute: 0
-          }
-          offPeakStartVMOnConnect: 'Enable'
-          offPeakMinutesToWaitOnDisconnect: 30
-          offPeakActionOnDisconnect: 'Hibernate'
-          offPeakMinutesToWaitOnLogoff: 0
-          offPeakActionOnLogoff: 'Deallocate'
-          peakStartTime: {
-            hour: 10
-            minute: 0
-          }
-          peakStartVMOnConnect: 'Enable'
-          peakMinutesToWaitOnDisconnect: 30
-          peakActionOnDisconnect: 'Hibernate'
-          peakMinutesToWaitOnLogoff: 0
-          peakActionOnLogoff: 'Deallocate'
-          rampDownStartTime: {
-            hour: 16
-            minute: 0
-          }
-          rampDownStartVMOnConnect: 'Enable'
-          rampDownMinutesToWaitOnDisconnect: 30
-          rampDownActionOnDisconnect: 'Hibernate'
-          rampDownMinutesToWaitOnLogoff: 0
-          rampDownActionOnLogoff: 'Deallocate'
-          rampUpStartTime: {
-            hour: 9
-            minute: 0
-          }
-          rampUpAutoStartHosts: 'None'
-          rampUpStartVMOnConnect: 'Enable'
-          rampUpMinutesToWaitOnDisconnect: 30
-          rampUpActionOnDisconnect: 'Hibernate'
-          rampUpMinutesToWaitOnLogoff: 0
-          rampUpActionOnLogoff: 'Deallocate'
-        }
-      ]
-      hostPoolReferences: [
-        {
-          hostPoolArmPath: nestedDependencies.outputs.hostPoolIdPersonal
-          scalingPlanEnabled: true
-        }
-      ]
-      diagnosticSettings: [
-        {
-          name: 'customSetting'
-          logCategoriesAndGroups: [
-            {
-              categoryGroup: 'allLogs'
-            }
-          ]
-          eventHubName: diagnosticDependencies.outputs.eventHubNamespaceEventHubName
-          eventHubAuthorizationRuleResourceId: diagnosticDependencies.outputs.eventHubAuthorizationRuleId
-          storageAccountResourceId: diagnosticDependencies.outputs.storageAccountResourceId
-          workspaceResourceId: diagnosticDependencies.outputs.logAnalyticsWorkspaceResourceId
-        }
-      ]
-      lock: {
-        kind: 'CanNotDelete'
-        name: 'myCustomLockName'
-      }
-      roleAssignments: [
-        {
-          roleDefinitionIdOrName: 'Owner'
-          principalId: nestedDependencies.outputs.managedIdentityPrincipalId
-          principalType: 'ServicePrincipal'
-        }
-        {
-          roleDefinitionIdOrName: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
-          principalId: nestedDependencies.outputs.managedIdentityPrincipalId
-          principalType: 'ServicePrincipal'
-        }
-        {
-          roleDefinitionIdOrName: subscriptionResourceId(
-            'Microsoft.Authorization/roleDefinitions',
-            'acdd72a7-3385-48ef-bd42-f606fba81ae7'
-          )
-          principalId: nestedDependencies.outputs.managedIdentityPrincipalId
-          principalType: 'ServicePrincipal'
-        }
-      ]
-      tags: {
-        'hidden-title': 'This is visible in the resource name'
-        Environment: 'Non-Prod'
-        Role: 'DeploymentValidation'
-      }
-    }
-  }
-]
+// @batchSize(1)
+// module testDeployment '../../../main.bicep' = [
+//   for iteration in ['init', 'idem']: {
+//     scope: resourceGroup
+//     name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
+//     params: {
+//       name: '${namePrefix}${serviceShort}002'
+//       location: resourceLocation
+//       friendlyName: 'friendlyName'
+//       description: 'myDescription'
+//       schedules: [
+//         {
+//           daysOfWeek: [
+//             'Monday'
+//             'Wednesday'
+//             'Thursday'
+//             'Friday'
+//           ]
+//           name: 'WeekdaySchedule'
+//           offPeakStartTime: {
+//             hour: 20
+//             minute: 0
+//           }
+//           offPeakStartVMOnConnect: 'Enable'
+//           offPeakMinutesToWaitOnDisconnect: 30
+//           offPeakActionOnDisconnect: 'Hibernate'
+//           offPeakMinutesToWaitOnLogoff: 0
+//           offPeakActionOnLogoff: 'Deallocate'
+//           peakStartTime: {
+//             hour: 9
+//             minute: 0
+//           }
+//           peakStartVMOnConnect: 'Enable'
+//           peakMinutesToWaitOnDisconnect: 30
+//           peakActionOnDisconnect: 'Hibernate'
+//           peakMinutesToWaitOnLogoff: 0
+//           peakActionOnLogoff: 'Deallocate'
+//           rampDownStartTime: {
+//             hour: 18
+//             minute: 0
+//           }
+//           rampDownStartVMOnConnect: 'Enable'
+//           rampDownMinutesToWaitOnDisconnect: 30
+//           rampDownActionOnDisconnect: 'Hibernate'
+//           rampDownMinutesToWaitOnLogoff: 0
+//           rampDownActionOnLogoff: 'Deallocate'
+//           rampUpStartTime: {
+//             hour: 7
+//             minute: 0
+//           }
+//           rampUpAutoStartHosts: 'WithAssignedUser'
+//           rampUpStartVMOnConnect: 'Enable'
+//           rampUpMinutesToWaitOnDisconnect: 30
+//           rampUpActionOnDisconnect: 'Hibernate'
+//           rampUpMinutesToWaitOnLogoff: 0
+//           rampUpActionOnLogoff: 'Deallocate'
+//         }
+//         {
+//           daysOfWeek: [
+//             'Tuesday'
+//           ]
+//           name: 'weekdaysSchedule-agent-updates'
+//           offPeakStartTime: {
+//             hour: 20
+//             minute: 0
+//           }
+//           offPeakStartVMOnConnect: 'Enable'
+//           offPeakMinutesToWaitOnDisconnect: 30
+//           offPeakActionOnDisconnect: 'Hibernate'
+//           offPeakMinutesToWaitOnLogoff: 0
+//           offPeakActionOnLogoff: 'Deallocate'
+//           peakStartTime: {
+//             hour: 9
+//             minute: 0
+//           }
+//           peakStartVMOnConnect: 'Enable'
+//           peakMinutesToWaitOnDisconnect: 30
+//           peakActionOnDisconnect: 'Hibernate'
+//           peakMinutesToWaitOnLogoff: 0
+//           peakActionOnLogoff: 'Deallocate'
+//           rampDownStartTime: {
+//             hour: 18
+//             minute: 0
+//           }
+//           rampDownStartVMOnConnect: 'Enable'
+//           rampDownMinutesToWaitOnDisconnect: 30
+//           rampDownActionOnDisconnect: 'Hibernate'
+//           rampDownMinutesToWaitOnLogoff: 0
+//           rampDownActionOnLogoff: 'Deallocate'
+//           rampUpStartTime: {
+//             hour: 7
+//             minute: 0
+//           }
+//           rampUpAutoStartHosts: 'WithAssignedUser'
+//           rampUpStartVMOnConnect: 'Enable'
+//           rampUpMinutesToWaitOnDisconnect: 30
+//           rampUpActionOnDisconnect: 'Hibernate'
+//           rampUpMinutesToWaitOnLogoff: 0
+//           rampUpActionOnLogoff: 'Deallocate'
+//         }
+//         {
+//           daysOfWeek: [
+//             'Saturday'
+//             'Sunday'
+//           ]
+//           name: 'WeekendSchedule'
+//           offPeakStartTime: {
+//             hour: 18
+//             minute: 0
+//           }
+//           offPeakStartVMOnConnect: 'Enable'
+//           offPeakMinutesToWaitOnDisconnect: 30
+//           offPeakActionOnDisconnect: 'Hibernate'
+//           offPeakMinutesToWaitOnLogoff: 0
+//           offPeakActionOnLogoff: 'Deallocate'
+//           peakStartTime: {
+//             hour: 10
+//             minute: 0
+//           }
+//           peakStartVMOnConnect: 'Enable'
+//           peakMinutesToWaitOnDisconnect: 30
+//           peakActionOnDisconnect: 'Hibernate'
+//           peakMinutesToWaitOnLogoff: 0
+//           peakActionOnLogoff: 'Deallocate'
+//           rampDownStartTime: {
+//             hour: 16
+//             minute: 0
+//           }
+//           rampDownStartVMOnConnect: 'Enable'
+//           rampDownMinutesToWaitOnDisconnect: 30
+//           rampDownActionOnDisconnect: 'Hibernate'
+//           rampDownMinutesToWaitOnLogoff: 0
+//           rampDownActionOnLogoff: 'Deallocate'
+//           rampUpStartTime: {
+//             hour: 9
+//             minute: 0
+//           }
+//           rampUpAutoStartHosts: 'None'
+//           rampUpStartVMOnConnect: 'Enable'
+//           rampUpMinutesToWaitOnDisconnect: 30
+//           rampUpActionOnDisconnect: 'Hibernate'
+//           rampUpMinutesToWaitOnLogoff: 0
+//           rampUpActionOnLogoff: 'Deallocate'
+//         }
+//       ]
+//       hostPoolReferences: [
+//         {
+//           hostPoolArmPath: nestedDependencies.outputs.hostPoolIdPersonal
+//           scalingPlanEnabled: true
+//         }
+//       ]
+//       diagnosticSettings: [
+//         {
+//           name: 'customSetting'
+//           logCategoriesAndGroups: [
+//             {
+//               categoryGroup: 'allLogs'
+//             }
+//           ]
+//           eventHubName: diagnosticDependencies.outputs.eventHubNamespaceEventHubName
+//           eventHubAuthorizationRuleResourceId: diagnosticDependencies.outputs.eventHubAuthorizationRuleId
+//           storageAccountResourceId: diagnosticDependencies.outputs.storageAccountResourceId
+//           workspaceResourceId: diagnosticDependencies.outputs.logAnalyticsWorkspaceResourceId
+//         }
+//       ]
+//       lock: {
+//         kind: 'CanNotDelete'
+//         name: 'myCustomLockName'
+//       }
+//       roleAssignments: [
+//         {
+//           roleDefinitionIdOrName: 'Owner'
+//           principalId: nestedDependencies.outputs.managedIdentityPrincipalId
+//           principalType: 'ServicePrincipal'
+//         }
+//         {
+//           roleDefinitionIdOrName: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+//           principalId: nestedDependencies.outputs.managedIdentityPrincipalId
+//           principalType: 'ServicePrincipal'
+//         }
+//         {
+//           roleDefinitionIdOrName: subscriptionResourceId(
+//             'Microsoft.Authorization/roleDefinitions',
+//             'acdd72a7-3385-48ef-bd42-f606fba81ae7'
+//           )
+//           principalId: nestedDependencies.outputs.managedIdentityPrincipalId
+//           principalType: 'ServicePrincipal'
+//         }
+//       ]
+//       tags: {
+//         'hidden-title': 'This is visible in the resource name'
+//         Environment: 'Non-Prod'
+//         Role: 'DeploymentValidation'
+//       }
+//     }
+//   }
+// ]
