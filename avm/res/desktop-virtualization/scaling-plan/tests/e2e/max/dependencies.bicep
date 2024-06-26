@@ -14,8 +14,8 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-
   location: location
 }
 
-resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' = {
-  name: 'myHostPool'
+resource hostPoolPooled 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' = {
+  name: 'myHostPoolPooled'
   location: location
   tags: tags
   properties: {
@@ -45,8 +45,43 @@ resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' = {
   }
 }
 
+resource hostPoolPersonal 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' = {
+  name: 'myHostPoolPersonal'
+  location: location
+  tags: tags
+  properties: {
+    friendlyName: 'hostPoolFriendlyName'
+    description: 'myDescription'
+    hostPoolType: 'Personal'
+    customRdpProperty: ''
+
+    personalDesktopAssignmentType: 'Automatic'
+    preferredAppGroupType: 'Desktop'
+    maxSessionLimit: 999999
+    loadBalancerType: 'Persistent'
+    startVMOnConnect: false
+    validationEnvironment: false
+    registrationInfo: {
+      expirationTime: expirationTime
+      token: null
+      registrationTokenOperation: 'Update'
+    }
+    agentUpdate: {
+      useSessionHostLocalTime: true
+    }
+    ring: -1
+    ssoadfsAuthority: ''
+    ssoClientId: ''
+    ssoClientSecretKeyVaultPath: ''
+    ssoSecretType: ''
+  }
+}
+
 @description('The resource ID of the created host pool.')
-output hostPoolId string = hostPool.id
+output hostPoolIdPooled string = hostPoolPooled.id
+
+@description('The resource ID of the created host pool.')
+output hostPoolIdPersonal string = hostPoolPersonal.id
 
 @description('The principal ID of the created Managed Identity.')
 output managedIdentityPrincipalId string = managedIdentity.properties.principalId
