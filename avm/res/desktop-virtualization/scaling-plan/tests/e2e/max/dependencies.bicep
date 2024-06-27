@@ -35,7 +35,19 @@ resource hostPoolPooled 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' =
       registrationTokenOperation: 'Update'
     }
     agentUpdate: {
-      useSessionHostLocalTime: true
+      type: 'Scheduled'
+      useSessionHostLocalTime: false
+      maintenanceWindowTimeZone: 'Alaskan Standard Time'
+      maintenanceWindows: [
+        {
+          hour: 7
+          dayOfWeek: 'Friday'
+        }
+        {
+          hour: 8
+          dayOfWeek: 'Saturday'
+        }
+      ]
     }
     ring: -1
     ssoadfsAuthority: ''
@@ -67,7 +79,19 @@ resource hostPoolPersonal 'Microsoft.DesktopVirtualization/hostPools@2022-09-09'
       registrationTokenOperation: 'Update'
     }
     agentUpdate: {
-      useSessionHostLocalTime: true
+      type: 'Scheduled'
+      useSessionHostLocalTime: false
+      maintenanceWindowTimeZone: 'Alaskan Standard Time'
+      maintenanceWindows: [
+        {
+          hour: 7
+          dayOfWeek: 'Friday'
+        }
+        {
+          hour: 8
+          dayOfWeek: 'Saturday'
+        }
+      ]
     }
     ring: -1
     ssoadfsAuthority: ''
