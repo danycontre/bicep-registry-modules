@@ -60,9 +60,9 @@ module diagnosticDependencies '../../../../../../utilities/e2e-template-assets/t
 module testDeployment '../../../main.bicep' = [
   for iteration in ['init', 'idem']: {
     scope: resourceGroup
-    name: '${uniqueString(deployment().name, resourceLocation)}-test-pol-${serviceShort}-${iteration}'
+    name: '${uniqueString(deployment().name, resourceLocation)}-test-per-${serviceShort}-${iteration}'
     params: {
-      name: '${namePrefix}${serviceShort}002'
+      name: '${namePrefix}${serviceShort}003'
       location: resourceLocation
       friendlyName: 'friendlyName'
       description: 'myDescription'
@@ -75,68 +75,86 @@ module testDeployment '../../../main.bicep' = [
             'Friday'
           ]
           name: 'WeekdaySchedule'
-          offPeakLoadBalancingAlgorithm: 'DepthFirst'
           offPeakStartTime: {
             hour: 20
             minute: 0
           }
-          peakLoadBalancingAlgorithm: 'DepthFirst'
+          offPeakStartVMOnConnect: 'Enable'
+          offPeakMinutesToWaitOnDisconnect: 30
+          offPeakActionOnDisconnect: 'Hibernate'
+          offPeakMinutesToWaitOnLogoff: 0
+          offPeakActionOnLogoff: 'Deallocate'
           peakStartTime: {
             hour: 9
             minute: 0
           }
-          rampDownCapacityThresholdPct: 90
-          rampDownForceLogoffUsers: true
-          rampDownLoadBalancingAlgorithm: 'DepthFirst'
-          rampDownMinimumHostsPct: 0
-          rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+          peakStartVMOnConnect: 'Enable'
+          peakMinutesToWaitOnDisconnect: 30
+          peakActionOnDisconnect: 'Hibernate'
+          peakMinutesToWaitOnLogoff: 0
+          peakActionOnLogoff: 'Deallocate'
           rampDownStartTime: {
             hour: 18
             minute: 0
           }
-          rampDownStopHostsWhen: 'ZeroActiveSessions'
-          rampDownWaitTimeMinutes: 30
-          rampUpCapacityThresholdPct: 80
-          rampUpLoadBalancingAlgorithm: 'BreadthFirst'
-          rampUpMinimumHostsPct: 20
+          rampDownStartVMOnConnect: 'Enable'
+          rampDownMinutesToWaitOnDisconnect: 30
+          rampDownActionOnDisconnect: 'Hibernate'
+          rampDownMinutesToWaitOnLogoff: 0
+          rampDownActionOnLogoff: 'Deallocate'
           rampUpStartTime: {
             hour: 7
             minute: 0
           }
+          rampUpAutoStartHosts: 'WithAssignedUser'
+          rampUpStartVMOnConnect: 'Enable'
+          rampUpMinutesToWaitOnDisconnect: 30
+          rampUpActionOnDisconnect: 'Hibernate'
+          rampUpMinutesToWaitOnLogoff: 0
+          rampUpActionOnLogoff: 'Deallocate'
         }
         {
           daysOfWeek: [
             'Tuesday'
           ]
           name: 'weekdaysSchedule-agent-updates'
-          offPeakLoadBalancingAlgorithm: 'DepthFirst'
           offPeakStartTime: {
             hour: 20
             minute: 0
           }
-          peakLoadBalancingAlgorithm: 'DepthFirst'
+          offPeakStartVMOnConnect: 'Enable'
+          offPeakMinutesToWaitOnDisconnect: 30
+          offPeakActionOnDisconnect: 'Hibernate'
+          offPeakMinutesToWaitOnLogoff: 0
+          offPeakActionOnLogoff: 'Deallocate'
           peakStartTime: {
             hour: 9
             minute: 0
           }
-          rampDownCapacityThresholdPct: 90
-          rampDownForceLogoffUsers: true
-          rampDownLoadBalancingAlgorithm: 'DepthFirst'
-          rampDownMinimumHostsPct: 0
-          rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+          peakStartVMOnConnect: 'Enable'
+          peakMinutesToWaitOnDisconnect: 30
+          peakActionOnDisconnect: 'Hibernate'
+          peakMinutesToWaitOnLogoff: 0
+          peakActionOnLogoff: 'Deallocate'
           rampDownStartTime: {
-            hour: 19
+            hour: 18
             minute: 0
           }
-          rampDownStopHostsWhen: 'ZeroActiveSessions'
-          rampDownWaitTimeMinutes: 30
-          rampUpCapacityThresholdPct: 80
-          rampUpLoadBalancingAlgorithm: 'BreadthFirst'
-          rampUpMinimumHostsPct: 20
+          rampDownStartVMOnConnect: 'Enable'
+          rampDownMinutesToWaitOnDisconnect: 30
+          rampDownActionOnDisconnect: 'Hibernate'
+          rampDownMinutesToWaitOnLogoff: 0
+          rampDownActionOnLogoff: 'Deallocate'
           rampUpStartTime: {
             hour: 7
             minute: 0
           }
+          rampUpAutoStartHosts: 'WithAssignedUser'
+          rampUpStartVMOnConnect: 'Enable'
+          rampUpMinutesToWaitOnDisconnect: 30
+          rampUpActionOnDisconnect: 'Hibernate'
+          rampUpMinutesToWaitOnLogoff: 0
+          rampUpActionOnLogoff: 'Deallocate'
         }
         {
           daysOfWeek: [
@@ -144,34 +162,43 @@ module testDeployment '../../../main.bicep' = [
             'Sunday'
           ]
           name: 'WeekendSchedule'
-          offPeakLoadBalancingAlgorithm: 'DepthFirst'
           offPeakStartTime: {
             hour: 18
             minute: 0
           }
-          peakLoadBalancingAlgorithm: 'DepthFirst'
+          offPeakStartVMOnConnect: 'Enable'
+          offPeakMinutesToWaitOnDisconnect: 30
+          offPeakActionOnDisconnect: 'Hibernate'
+          offPeakMinutesToWaitOnLogoff: 0
+          offPeakActionOnLogoff: 'Deallocate'
           peakStartTime: {
             hour: 10
             minute: 0
           }
-          rampDownCapacityThresholdPct: 90
-          rampDownForceLogoffUsers: true
-          rampDownLoadBalancingAlgorithm: 'DepthFirst'
-          rampDownMinimumHostsPct: 0
-          rampDownNotificationMessage: 'You will be logged off in 30 min. Make sure to save your work.'
+          peakStartVMOnConnect: 'Enable'
+          peakMinutesToWaitOnDisconnect: 30
+          peakActionOnDisconnect: 'Hibernate'
+          peakMinutesToWaitOnLogoff: 0
+          peakActionOnLogoff: 'Deallocate'
           rampDownStartTime: {
             hour: 16
             minute: 0
           }
-          rampDownStopHostsWhen: 'ZeroActiveSessions'
-          rampDownWaitTimeMinutes: 30
-          rampUpCapacityThresholdPct: 90
-          rampUpLoadBalancingAlgorithm: 'DepthFirst'
-          rampUpMinimumHostsPct: 0
+          rampDownStartVMOnConnect: 'Enable'
+          rampDownMinutesToWaitOnDisconnect: 30
+          rampDownActionOnDisconnect: 'Hibernate'
+          rampDownMinutesToWaitOnLogoff: 0
+          rampDownActionOnLogoff: 'Deallocate'
           rampUpStartTime: {
             hour: 9
             minute: 0
           }
+          rampUpAutoStartHosts: 'None'
+          rampUpStartVMOnConnect: 'Enable'
+          rampUpMinutesToWaitOnDisconnect: 30
+          rampUpActionOnDisconnect: 'Hibernate'
+          rampUpMinutesToWaitOnLogoff: 0
+          rampUpActionOnLogoff: 'Deallocate'
         }
       ]
       hostPoolReferences: [

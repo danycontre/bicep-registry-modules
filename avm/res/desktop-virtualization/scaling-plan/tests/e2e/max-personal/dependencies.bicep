@@ -15,18 +15,19 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-
 }
 
 resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2022-09-09' = {
-  name: 'myHostPoolPooled'
+  name: 'myHostPoolPersonal'
   location: location
   tags: tags
   properties: {
     friendlyName: 'hostPoolFriendlyName'
     description: 'myDescription'
-    hostPoolType: 'Pooled'
+    hostPoolType: 'Personal'
     customRdpProperty: ''
+
     personalDesktopAssignmentType: 'Automatic'
     preferredAppGroupType: 'Desktop'
-    maxSessionLimit: 5
-    loadBalancerType: 'BreadthFirst'
+    maxSessionLimit: 999999
+    loadBalancerType: 'Persistent'
     startVMOnConnect: false
     validationEnvironment: false
     registrationInfo: {

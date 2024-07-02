@@ -18,6 +18,8 @@ This module deploys an Azure Virtual Desktop Scaling Plan.
 | `Microsoft.Authorization/locks` | [2020-05-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.Authorization/2020-05-01/locks) |
 | `Microsoft.Authorization/roleAssignments` | [2022-04-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.Authorization/2022-04-01/roleAssignments) |
 | `Microsoft.DesktopVirtualization/scalingPlans` | [2023-09-05](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DesktopVirtualization/2023-09-05/scalingPlans) |
+| `Microsoft.DesktopVirtualization/scalingPlans/personalSchedules` | [2024-03-06-preview](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DesktopVirtualization/scalingPlans/personalSchedules) |
+| `Microsoft.DesktopVirtualization/scalingPlans/pooledSchedules` | [2023-11-01-preview](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DesktopVirtualization/2023-11-01-preview/scalingPlans/pooledSchedules) |
 | `Microsoft.Insights/diagnosticSettings` | [2021-05-01-preview](https://learn.microsoft.com/en-us/azure/templates/Microsoft.Insights/2021-05-01-preview/diagnosticSettings) |
 
 ## Usage examples
@@ -30,7 +32,8 @@ The following section provides usage examples for the module, which were used to
 
 - [Using only defaults](#example-1-using-only-defaults)
 - [Using large parameter set](#example-2-using-large-parameter-set)
-- [WAF-aligned](#example-3-waf-aligned)
+- [Using large parameter set](#example-3-using-large-parameter-set)
+- [WAF-aligned](#example-4-waf-aligned)
 
 ### Example 1: _Using only defaults_
 
@@ -81,6 +84,436 @@ module scalingPlan 'br/public:avm/res/desktop-virtualization/scaling-plan:<versi
 <p>
 
 ### Example 2: _Using large parameter set_
+
+This instance deploys the module with most of its features enabled.
+
+
+<details>
+
+<summary>via Bicep module</summary>
+
+```bicep
+module scalingPlan 'br/public:avm/res/desktop-virtualization/scaling-plan:<version>' = {
+  name: 'scalingPlanDeployment'
+  params: {
+    // Required parameters
+    name: 'dvspmax003'
+    // Non-required parameters
+    description: 'myDescription'
+    diagnosticSettings: [
+      {
+        eventHubAuthorizationRuleResourceId: '<eventHubAuthorizationRuleResourceId>'
+        eventHubName: '<eventHubName>'
+        logCategoriesAndGroups: [
+          {
+            categoryGroup: 'allLogs'
+          }
+        ]
+        name: 'customSetting'
+        storageAccountResourceId: '<storageAccountResourceId>'
+        workspaceResourceId: '<workspaceResourceId>'
+      }
+    ]
+    friendlyName: 'friendlyName'
+    hostPoolReferences: [
+      {
+        hostPoolArmPath: '<hostPoolArmPath>'
+        scalingPlanEnabled: true
+      }
+    ]
+    location: '<location>'
+    lock: {
+      kind: 'CanNotDelete'
+      name: 'myCustomLockName'
+    }
+    roleAssignments: [
+      {
+        principalId: '<principalId>'
+        principalType: 'ServicePrincipal'
+        roleDefinitionIdOrName: 'Owner'
+      }
+      {
+        principalId: '<principalId>'
+        principalType: 'ServicePrincipal'
+        roleDefinitionIdOrName: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+      }
+      {
+        principalId: '<principalId>'
+        principalType: 'ServicePrincipal'
+        roleDefinitionIdOrName: '<roleDefinitionIdOrName>'
+      }
+    ]
+    schedules: [
+      {
+        daysOfWeek: [
+          'Friday'
+          'Monday'
+          'Thursday'
+          'Wednesday'
+        ]
+        name: 'WeekdaySchedule'
+        offPeakActionOnDisconnect: 'Hibernate'
+        offPeakActionOnLogoff: 'Deallocate'
+        offPeakMinutesToWaitOnDisconnect: 30
+        offPeakMinutesToWaitOnLogoff: 0
+        offPeakStartTime: {
+          hour: 20
+          minute: 0
+        }
+        offPeakStartVMOnConnect: 'Enable'
+        peakActionOnDisconnect: 'Hibernate'
+        peakActionOnLogoff: 'Deallocate'
+        peakMinutesToWaitOnDisconnect: 30
+        peakMinutesToWaitOnLogoff: 0
+        peakStartTime: {
+          hour: 9
+          minute: 0
+        }
+        peakStartVMOnConnect: 'Enable'
+        rampDownActionOnDisconnect: 'Hibernate'
+        rampDownActionOnLogoff: 'Deallocate'
+        rampDownMinutesToWaitOnDisconnect: 30
+        rampDownMinutesToWaitOnLogoff: 0
+        rampDownStartTime: {
+          hour: 18
+          minute: 0
+        }
+        rampDownStartVMOnConnect: 'Enable'
+        rampUpActionOnDisconnect: 'Hibernate'
+        rampUpActionOnLogoff: 'Deallocate'
+        rampUpAutoStartHosts: 'WithAssignedUser'
+        rampUpMinutesToWaitOnDisconnect: 30
+        rampUpMinutesToWaitOnLogoff: 0
+        rampUpStartTime: {
+          hour: 7
+          minute: 0
+        }
+        rampUpStartVMOnConnect: 'Enable'
+      }
+      {
+        daysOfWeek: [
+          'Tuesday'
+        ]
+        name: 'weekdaysSchedule-agent-updates'
+        offPeakActionOnDisconnect: 'Hibernate'
+        offPeakActionOnLogoff: 'Deallocate'
+        offPeakMinutesToWaitOnDisconnect: 30
+        offPeakMinutesToWaitOnLogoff: 0
+        offPeakStartTime: {
+          hour: 20
+          minute: 0
+        }
+        offPeakStartVMOnConnect: 'Enable'
+        peakActionOnDisconnect: 'Hibernate'
+        peakActionOnLogoff: 'Deallocate'
+        peakMinutesToWaitOnDisconnect: 30
+        peakMinutesToWaitOnLogoff: 0
+        peakStartTime: {
+          hour: 9
+          minute: 0
+        }
+        peakStartVMOnConnect: 'Enable'
+        rampDownActionOnDisconnect: 'Hibernate'
+        rampDownActionOnLogoff: 'Deallocate'
+        rampDownMinutesToWaitOnDisconnect: 30
+        rampDownMinutesToWaitOnLogoff: 0
+        rampDownStartTime: {
+          hour: 18
+          minute: 0
+        }
+        rampDownStartVMOnConnect: 'Enable'
+        rampUpActionOnDisconnect: 'Hibernate'
+        rampUpActionOnLogoff: 'Deallocate'
+        rampUpAutoStartHosts: 'WithAssignedUser'
+        rampUpMinutesToWaitOnDisconnect: 30
+        rampUpMinutesToWaitOnLogoff: 0
+        rampUpStartTime: {
+          hour: 7
+          minute: 0
+        }
+        rampUpStartVMOnConnect: 'Enable'
+      }
+      {
+        daysOfWeek: [
+          'Saturday'
+          'Sunday'
+        ]
+        name: 'WeekendSchedule'
+        offPeakActionOnDisconnect: 'Hibernate'
+        offPeakActionOnLogoff: 'Deallocate'
+        offPeakMinutesToWaitOnDisconnect: 30
+        offPeakMinutesToWaitOnLogoff: 0
+        offPeakStartTime: {
+          hour: 18
+          minute: 0
+        }
+        offPeakStartVMOnConnect: 'Enable'
+        peakActionOnDisconnect: 'Hibernate'
+        peakActionOnLogoff: 'Deallocate'
+        peakMinutesToWaitOnDisconnect: 30
+        peakMinutesToWaitOnLogoff: 0
+        peakStartTime: {
+          hour: 10
+          minute: 0
+        }
+        peakStartVMOnConnect: 'Enable'
+        rampDownActionOnDisconnect: 'Hibernate'
+        rampDownActionOnLogoff: 'Deallocate'
+        rampDownMinutesToWaitOnDisconnect: 30
+        rampDownMinutesToWaitOnLogoff: 0
+        rampDownStartTime: {
+          hour: 16
+          minute: 0
+        }
+        rampDownStartVMOnConnect: 'Enable'
+        rampUpActionOnDisconnect: 'Hibernate'
+        rampUpActionOnLogoff: 'Deallocate'
+        rampUpAutoStartHosts: 'None'
+        rampUpMinutesToWaitOnDisconnect: 30
+        rampUpMinutesToWaitOnLogoff: 0
+        rampUpStartTime: {
+          hour: 9
+          minute: 0
+        }
+        rampUpStartVMOnConnect: 'Enable'
+      }
+    ]
+    tags: {
+      Environment: 'Non-Prod'
+      'hidden-title': 'This is visible in the resource name'
+      Role: 'DeploymentValidation'
+    }
+  }
+}
+```
+
+</details>
+<p>
+
+<details>
+
+<summary>via JSON Parameter file</summary>
+
+```json
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    // Required parameters
+    "name": {
+      "value": "dvspmax003"
+    },
+    // Non-required parameters
+    "description": {
+      "value": "myDescription"
+    },
+    "diagnosticSettings": {
+      "value": [
+        {
+          "eventHubAuthorizationRuleResourceId": "<eventHubAuthorizationRuleResourceId>",
+          "eventHubName": "<eventHubName>",
+          "logCategoriesAndGroups": [
+            {
+              "categoryGroup": "allLogs"
+            }
+          ],
+          "name": "customSetting",
+          "storageAccountResourceId": "<storageAccountResourceId>",
+          "workspaceResourceId": "<workspaceResourceId>"
+        }
+      ]
+    },
+    "friendlyName": {
+      "value": "friendlyName"
+    },
+    "hostPoolReferences": {
+      "value": [
+        {
+          "hostPoolArmPath": "<hostPoolArmPath>",
+          "scalingPlanEnabled": true
+        }
+      ]
+    },
+    "location": {
+      "value": "<location>"
+    },
+    "lock": {
+      "value": {
+        "kind": "CanNotDelete",
+        "name": "myCustomLockName"
+      }
+    },
+    "roleAssignments": {
+      "value": [
+        {
+          "principalId": "<principalId>",
+          "principalType": "ServicePrincipal",
+          "roleDefinitionIdOrName": "Owner"
+        },
+        {
+          "principalId": "<principalId>",
+          "principalType": "ServicePrincipal",
+          "roleDefinitionIdOrName": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+        },
+        {
+          "principalId": "<principalId>",
+          "principalType": "ServicePrincipal",
+          "roleDefinitionIdOrName": "<roleDefinitionIdOrName>"
+        }
+      ]
+    },
+    "schedules": {
+      "value": [
+        {
+          "daysOfWeek": [
+            "Friday",
+            "Monday",
+            "Thursday",
+            "Wednesday"
+          ],
+          "name": "WeekdaySchedule",
+          "offPeakActionOnDisconnect": "Hibernate",
+          "offPeakActionOnLogoff": "Deallocate",
+          "offPeakMinutesToWaitOnDisconnect": 30,
+          "offPeakMinutesToWaitOnLogoff": 0,
+          "offPeakStartTime": {
+            "hour": 20,
+            "minute": 0
+          },
+          "offPeakStartVMOnConnect": "Enable",
+          "peakActionOnDisconnect": "Hibernate",
+          "peakActionOnLogoff": "Deallocate",
+          "peakMinutesToWaitOnDisconnect": 30,
+          "peakMinutesToWaitOnLogoff": 0,
+          "peakStartTime": {
+            "hour": 9,
+            "minute": 0
+          },
+          "peakStartVMOnConnect": "Enable",
+          "rampDownActionOnDisconnect": "Hibernate",
+          "rampDownActionOnLogoff": "Deallocate",
+          "rampDownMinutesToWaitOnDisconnect": 30,
+          "rampDownMinutesToWaitOnLogoff": 0,
+          "rampDownStartTime": {
+            "hour": 18,
+            "minute": 0
+          },
+          "rampDownStartVMOnConnect": "Enable",
+          "rampUpActionOnDisconnect": "Hibernate",
+          "rampUpActionOnLogoff": "Deallocate",
+          "rampUpAutoStartHosts": "WithAssignedUser",
+          "rampUpMinutesToWaitOnDisconnect": 30,
+          "rampUpMinutesToWaitOnLogoff": 0,
+          "rampUpStartTime": {
+            "hour": 7,
+            "minute": 0
+          },
+          "rampUpStartVMOnConnect": "Enable"
+        },
+        {
+          "daysOfWeek": [
+            "Tuesday"
+          ],
+          "name": "weekdaysSchedule-agent-updates",
+          "offPeakActionOnDisconnect": "Hibernate",
+          "offPeakActionOnLogoff": "Deallocate",
+          "offPeakMinutesToWaitOnDisconnect": 30,
+          "offPeakMinutesToWaitOnLogoff": 0,
+          "offPeakStartTime": {
+            "hour": 20,
+            "minute": 0
+          },
+          "offPeakStartVMOnConnect": "Enable",
+          "peakActionOnDisconnect": "Hibernate",
+          "peakActionOnLogoff": "Deallocate",
+          "peakMinutesToWaitOnDisconnect": 30,
+          "peakMinutesToWaitOnLogoff": 0,
+          "peakStartTime": {
+            "hour": 9,
+            "minute": 0
+          },
+          "peakStartVMOnConnect": "Enable",
+          "rampDownActionOnDisconnect": "Hibernate",
+          "rampDownActionOnLogoff": "Deallocate",
+          "rampDownMinutesToWaitOnDisconnect": 30,
+          "rampDownMinutesToWaitOnLogoff": 0,
+          "rampDownStartTime": {
+            "hour": 18,
+            "minute": 0
+          },
+          "rampDownStartVMOnConnect": "Enable",
+          "rampUpActionOnDisconnect": "Hibernate",
+          "rampUpActionOnLogoff": "Deallocate",
+          "rampUpAutoStartHosts": "WithAssignedUser",
+          "rampUpMinutesToWaitOnDisconnect": 30,
+          "rampUpMinutesToWaitOnLogoff": 0,
+          "rampUpStartTime": {
+            "hour": 7,
+            "minute": 0
+          },
+          "rampUpStartVMOnConnect": "Enable"
+        },
+        {
+          "daysOfWeek": [
+            "Saturday",
+            "Sunday"
+          ],
+          "name": "WeekendSchedule",
+          "offPeakActionOnDisconnect": "Hibernate",
+          "offPeakActionOnLogoff": "Deallocate",
+          "offPeakMinutesToWaitOnDisconnect": 30,
+          "offPeakMinutesToWaitOnLogoff": 0,
+          "offPeakStartTime": {
+            "hour": 18,
+            "minute": 0
+          },
+          "offPeakStartVMOnConnect": "Enable",
+          "peakActionOnDisconnect": "Hibernate",
+          "peakActionOnLogoff": "Deallocate",
+          "peakMinutesToWaitOnDisconnect": 30,
+          "peakMinutesToWaitOnLogoff": 0,
+          "peakStartTime": {
+            "hour": 10,
+            "minute": 0
+          },
+          "peakStartVMOnConnect": "Enable",
+          "rampDownActionOnDisconnect": "Hibernate",
+          "rampDownActionOnLogoff": "Deallocate",
+          "rampDownMinutesToWaitOnDisconnect": 30,
+          "rampDownMinutesToWaitOnLogoff": 0,
+          "rampDownStartTime": {
+            "hour": 16,
+            "minute": 0
+          },
+          "rampDownStartVMOnConnect": "Enable",
+          "rampUpActionOnDisconnect": "Hibernate",
+          "rampUpActionOnLogoff": "Deallocate",
+          "rampUpAutoStartHosts": "None",
+          "rampUpMinutesToWaitOnDisconnect": 30,
+          "rampUpMinutesToWaitOnLogoff": 0,
+          "rampUpStartTime": {
+            "hour": 9,
+            "minute": 0
+          },
+          "rampUpStartVMOnConnect": "Enable"
+        }
+      ]
+    },
+    "tags": {
+      "value": {
+        "Environment": "Non-Prod",
+        "hidden-title": "This is visible in the resource name",
+        "Role": "DeploymentValidation"
+      }
+    }
+  }
+}
+```
+
+</details>
+<p>
+
+### Example 3: _Using large parameter set_
 
 This instance deploys the module with most of its features enabled.
 
@@ -456,7 +889,7 @@ module scalingPlan 'br/public:avm/res/desktop-virtualization/scaling-plan:<versi
 </details>
 <p>
 
-### Example 3: _WAF-aligned_
+### Example 4: _WAF-aligned_
 
 This instance deploys the module in alignment with the best-practices of the Azure Well-Architected Framework.
 
