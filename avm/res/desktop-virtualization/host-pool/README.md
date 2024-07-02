@@ -368,6 +368,21 @@ module hostPool 'br/public:avm/res/desktop-virtualization/host-pool:<version>' =
     // Required parameters
     name: 'dvhpwaf002'
     // Non-required parameters
+    agentUpdate: {
+      maintenanceWindows: [
+        {
+          dayOfWeek: 'Friday'
+          hour: 7
+        }
+        {
+          dayOfWeek: 'Saturday'
+          hour: 8
+        }
+      ]
+      maintenanceWindowTimeZone: 'Alaskan Standard Time'
+      type: 'Scheduled'
+      useSessionHostLocalTime: false
+    }
     diagnosticSettings: [
       {
         eventHubAuthorizationRuleResourceId: '<eventHubAuthorizationRuleResourceId>'
@@ -403,6 +418,23 @@ module hostPool 'br/public:avm/res/desktop-virtualization/host-pool:<version>' =
       "value": "dvhpwaf002"
     },
     // Non-required parameters
+    "agentUpdate": {
+      "value": {
+        "maintenanceWindows": [
+          {
+            "dayOfWeek": "Friday",
+            "hour": 7
+          },
+          {
+            "dayOfWeek": "Saturday",
+            "hour": 8
+          }
+        ],
+        "maintenanceWindowTimeZone": "Alaskan Standard Time",
+        "type": "Scheduled",
+        "useSessionHostLocalTime": false
+      }
+    },
     "diagnosticSettings": {
       "value": [
         {
